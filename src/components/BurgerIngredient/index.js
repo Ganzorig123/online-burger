@@ -5,10 +5,10 @@ const BurgerIngredient = (props) => {
   if (props.type == "bread-top")
     return (
       <div className={css.BreadTop}>
-        <div class={css.Seed}></div>
-        <div class={`${css.Seed} ${css.Second}`}></div>
-        <div class={`${css.Seed} ${css.Third}`}></div>
-        <div class={`${css.Seed} ${css.Fourth}`}></div>
+        <div className={css.Seed}></div>
+        <div className={`${css.Seed} ${css.Second}`}></div>
+        <div className={`${css.Seed} ${css.Third}`}></div>
+        <div className={`${css.Seed} ${css.Fourth}`}></div>
       </div>
     );
   if (props.type == "salad") return <div className={css.Salad}></div>;
