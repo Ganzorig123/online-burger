@@ -4,9 +4,7 @@ import BurgerIngredient from "../BurgerIngredient";
 import css from "./style.module.css";
 
 const Burger = (props) => {
-  console.log(props.orts);
   const items = Object.entries(props.orts);
-  console.log(items);
   let content = [];
   items.map((el, index) => {
     for (let i = 0; i < el[1]; i++)
