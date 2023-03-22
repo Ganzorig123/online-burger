@@ -1,10 +1,19 @@
 import React, { Component } from "react";
 import Burger from "../../components/Burger";
 import BuildControls from "../../components/BuildControls";
+import Modal from "../../components/General/Modal";
+import OrderSummary from "../../components/OrderSummary";
 
 const INGREDIENTS_PRICE = { salad: 150, bacon: 800, cheese: 250, meat: 1500 };
 
-class BurgerBuilder extends Component {
+const INGREDIENTS_NAMES = {
+  salad: "Салад",
+  bacon: "Гахайн мах",
+  cheese: "Бяслаг",
+  meat: "Үхрийн мах",
+};
+
+class BurgerPage extends Component {
   state = {
     ingredients: {
       salad: 0,
@@ -14,6 +23,19 @@ class BurgerBuilder extends Component {
     },
 
     totalPrice: 1000,
+    confirmOrder: false,
+  };
+
+  showConfirmModal = () => {
+    this.setState({ confirmOrder: true });
+  };
+
+  closeConfirmModal = () => {
+    this.setState({ confirmOrder: false });
+  };
+
+  continueOrder = () => {
+    console.log("Continue Daragdlaa...");
   };
 
   ortsNemeh = (type) => {
@@ -44,8 +66,22 @@ class BurgerBuilder extends Component {
 
     return (
       <div>
+        <Modal
+          closeConfirmModal={this.closeConfirmModal}
+          show={this.state.confirmOrder}
+        >
+          <OrderSummary
+            onCancel={this.closeConfirmModal}
+            onContinue={this.continueOrder}
+            totalPrice={this.state.totalPrice}
+            ingredientsNames={INGREDIENTS_NAMES}
+            ingredients={this.state.ingredients}
+          />
+        </Modal>
         <Burger orts={this.state.ingredients} />
         <BuildControls
+          showConfirmModal={this.showConfirmModal}
+          ingredientsNames={INGREDIENTS_NAMES}
           totalPrice={this.state.totalPrice}
           ortsNemeh={this.ortsNemeh}
           ortsHasah={this.ortsHasah}
@@ -56,4 +92,4 @@ class BurgerBuilder extends Component {
   }
 }
 
-export default BurgerBuilder;
+export default BurgerPage;
