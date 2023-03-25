@@ -1,8 +1,10 @@
 import React from "react";
-import css from "../Shadow/style.module.css";
+import css from "./style.module.css";
 
-const Shadow = (props) => (
-  <div onClick={props.daragdlaa} className={css.Shadow}></div>
-);
+const Shadow = (props) => {
+  return props.show ? (
+    <div onClick={props.darahad} className={css.Shadow}></div>
+  ) : null;
+};
 
 export default Shadow;

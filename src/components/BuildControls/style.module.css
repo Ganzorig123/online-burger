@@ -28,8 +28,8 @@
 .OrderButton:hover,
 .OrderButton:active {
   background-color: #a0db41;
-  border: 1px solid #ccc;
-  color: #888888;
+  border: 1px solid #966909;
+  color: #966909;
 }
 
 .OrderButton:disabled {

@@ -1,6 +1,7 @@
 import React from "react";
-import MenuItem from "../MenuItem";
+
 import css from "./style.module.css";
+import MenuItem from "../MenuItem";
 
 const Menu = () => (
   <div>

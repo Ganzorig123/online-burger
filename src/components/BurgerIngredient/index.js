@@ -1,7 +1,8 @@
 import React from "react";
+
 import css from "./style.module.css";
 
-const BurgerIngredient = (props) => {
+const BurgerIngredient = props => {
   if (props.type === "bread-top")
     return (
       <div className={css.BreadTop}>
@@ -17,6 +18,8 @@ const BurgerIngredient = (props) => {
   if (props.type === "cheese") return <div className={css.Cheese}></div>;
   if (props.type === "bread-bottom")
     return <div className={css.BreadBottom}></div>;
+
+  return <div>...</div>;
 };
 
 export default BurgerIngredient;

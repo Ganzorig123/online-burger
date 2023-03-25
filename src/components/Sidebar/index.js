@@ -1,22 +1,28 @@
 import React from "react";
-import Shadow from "../General/Shadow";
+
+import css from "./style.module.css";
 import Logo from "../Logo";
 import Menu from "../Menu";
-import css from "./style.module.css";
+import Shadow from "../General/Shadow";
 
-const Sidebar = (props) => {
-  let classes = [css.Sidebar, css.Close];
+const SideBar = (props) => {
+  let classes = [css.SideBar, css.Close];
+
+  if (props.showSidebar) {
+    classes = [css.SideBar, css.Open];
+  }
+
   return (
     <div>
-      <Shadow show={props.showSidebar} />
-      <div className={classes.join(" ")}>
+      <Shadow show={props.showSidebar} darahad={props.toggleSideBar} />
+      <div onClick={props.toggleSideBar} className={classes.join(" ")}>
         <div className={css.Logo}>
           <Logo />
-          <Menu />
         </div>
+        <Menu />
       </div>
     </div>
   );
 };
 
-export default Sidebar;
+export default SideBar;

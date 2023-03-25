@@ -1,16 +1,16 @@
 import React, { Component } from "react";
-import Sidebar from "../../components/Sidebar";
-import Toolbar from "../../components/Toolbar";
-import BurgerPage from "../BurgerPage";
-
 import css from "./style.module.css";
 
-class App extends Component() {
+import Toolbar from "../../components/Toolbar";
+import BurgerPage from "../BurgerPage";
+import SideBar from "../../components/SideBar";
+
+class App extends Component {
   state = {
     showSidebar: false,
   };
 
-  toggleSidebar = () => {
+  toggleSideBar = () => {
     this.setState((prevState) => {
       return { showSidebar: !prevState.showSidebar };
     });
@@ -19,14 +19,14 @@ class App extends Component() {
   render() {
     return (
       <div>
-        <Toolbar toggleSidebar={this.toggleSidebar} />
-        <Sidebar
+        <Toolbar toggleSideBar={this.toggleSideBar} />
+        <SideBar
           showSidebar={this.state.showSidebar}
-          toggleSidebar={this.toggleSidebar}
+          toggleSideBar={this.toggleSideBar}
         />
-        <div className={css.Content}>
+        <main className={css.Content}>
           <BurgerPage />
-        </div>
+        </main>
       </div>
     );
   }

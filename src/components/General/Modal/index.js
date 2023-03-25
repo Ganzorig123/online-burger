@@ -1,10 +1,11 @@
 import React from "react";
-import Shadow from "../Shadow";
 import css from "./style.module.css";
+import Shadow from "../Shadow";
 
-const Modal = (props) => (
+const modal = (props) => (
   <div>
-    {props.show ? <Shadow daragdlaa={props.closeConfirmModal} /> : null}
+    <Shadow show={props.show} darahad={props.closeConfirmModal} />
+
     <div
       style={{
         transform: props.show ? "translateY(0)" : "translateY(-100vh)",
@@ -17,4 +18,4 @@ const Modal = (props) => (
   </div>
 );
 
-export default Modal;
+export default modal;

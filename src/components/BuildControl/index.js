@@ -1,17 +1,17 @@
 import React from "react";
 import css from "./style.module.css";
 
-const BuildControl = (props) => (
+const BuildControl = props => (
   <div className={css.BuildControl}>
     <div className={css.Label}>{props.orts}</div>
     <button
-      className={css.Less}
       disabled={props.disabled[props.type]}
       onClick={() => props.ortsHasah(props.type)}
+      className={css.Less}
     >
       Хасах
     </button>
-    <button className={css.More} onClick={() => props.ortsNemeh(props.type)}>
+    <button onClick={() => props.ortsNemeh(props.type)} className={css.More}>
       Нэмэх
     </button>
   </div>
