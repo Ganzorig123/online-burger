@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { Route, Routes } from "react-router-dom";
 import css from "./style.module.css";
 
 import Toolbar from "../../components/Toolbar";
 import BurgerPage from "../BurgerPage";
+import OrderPage from "../OrderPage";
 import SideBar from "../../components/SideBar";
 
 class App extends Component {
@@ -25,7 +27,10 @@ class App extends Component {
           toggleSideBar={this.toggleSideBar}
         />
         <main className={css.Content}>
-          <BurgerPage />
+          <Routes>
+            <Route path="/orders" Component={OrderPage} />
+            <Route path="/" Component={BurgerPage} />
+          </Routes>
         </main>
       </div>
     );
