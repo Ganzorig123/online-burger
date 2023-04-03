@@ -6,6 +6,7 @@ import Toolbar from "../../components/Toolbar";
 import BurgerPage from "../BurgerPage";
 import OrderPage from "../OrderPage";
 import SideBar from "../../components/SideBar";
+import ShippingPage from "../ShippingPage";
 
 class App extends Component {
   state = {
@@ -29,6 +30,7 @@ class App extends Component {
         <main className={css.Content}>
           <Routes>
             <Route path="/orders" Component={OrderPage} />
+            <Route path="/ship" Component={ShippingPage} />
             <Route path="/" Component={BurgerPage} />
           </Routes>
         </main>

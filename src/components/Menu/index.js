@@ -10,6 +10,7 @@ const Menu = () => (
         ШИНЭ ЗАХИАЛГА
       </MenuItem>
       <MenuItem link="/orders">ЗАХИАЛГАНУУД</MenuItem>
+      <MenuItem link="/ship">Shipping</MenuItem>
     </ul>
   </div>
 );

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+// import { useHistory } from "react-router-dom";
 
 import Burger from "../../components/Burger";
 import BuildControls from "../../components/BuildControls";
@@ -15,6 +16,7 @@ const INGREDIENT_NAMES = {
   cheese: "Бяслаг",
   meat: "Үхрийн мах",
 };
+// let history = useHistory();
 
 class BurgerBuilder extends Component {
   state = {
@@ -43,29 +45,41 @@ class BurgerBuilder extends Component {
   };
 
   continueOrder = () => {
-    const order = {
-      orts: this.state.ingredients,
-      dun: this.state.totalPrice,
-      hayag: {
-        name: "Энхтөр",
-        city: "UB",
-        street: "10-r horoolol 23-12",
-      },
-    };
+    // const order = {
+    //   orts: this.state.ingredients,
+    //   dun: this.state.totalPrice,
+    //   hayag: {
+    //     name: "Энхтөр",
+    //     city: "UB",
+    //     street: "10-r horoolol 23-12",
+    //   },
+    // };
 
-    axios
-      .post("orders.json", order)
-      .then((response) => {})
-      .finally(() => {});
+    // axios
+    //   .post("orders.json", order)
+    //   .then((response) => {})
+    //   .finally(() => {});
 
-    this.setState({
-      ingredients: {
-        salad: 0,
-        bacon: 0,
-        cheese: 0,
-        meat: 0,
-      },
-    });
+    // this.setState({
+    //   ingredients: {
+    //     salad: 0,
+    //     bacon: 0,
+    //     cheese: 0,
+    //     meat: 0,
+    //   },
+    // });
+    console.log(this.props);
+
+    const params = [];
+    for (let orts in this.state.ingredients) {
+      params.push(orts + "=" + this.state.ingredients[orts]);
+    }
+
+    const query = params.join("&");
+    console.log(query);
+    // history.push("/ship");
+
+    this.closeConfirmModal();
   };
 
   showConfirmModal = () => {
@@ -101,6 +115,7 @@ class BurgerBuilder extends Component {
   };
 
   render() {
+    console.log(this.props);
     const disabledIngredients = { ...this.state.ingredients };
 
     for (let key in disabledIngredients) {
@@ -121,7 +136,6 @@ class BurgerBuilder extends Component {
             ingredients={this.state.ingredients}
           />
         </Modal>
-
         <Burger orts={this.state.ingredients} />
         <BuildControls
           showConfirmModal={this.showConfirmModal}
