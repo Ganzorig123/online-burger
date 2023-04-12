@@ -1,37 +1,51 @@
-import React, { Component } from "react";
+import React from "react";
+import { connect } from "react-redux";
 import Burger from "../../components/Burger";
 import Button from "../../components/General/Button";
+import ContactData from "../../components/ContactData";
 import css from "./style.module.css";
+import { Route, Routes } from "react-router-dom";
 
-class ShippingPage extends Component {
-  state = {
-    ingredients: {
-      salad: 3,
-      bacon: 0,
-      cheese: 2,
-      meat: 1,
-    },
-    totalPrice: 1000,
-    purchasing: false,
-    confirmOrder: false,
-  };
-
-  goBack = () => {
+const ShippingPage = (props) => {
+  const cancelOrder = () => {
     console.log("GoBack");
+    // props.history.goBack();
   };
 
-  render() {
-    return (
-      <div className={css.ShippingPage}>
-        <Burger orts={this.state.ingredients} />
-        <Button
-          daragdsan={this.goBack}
-          btnType="Danger"
-          text="Захиалгыг цуцлах"
-        />
-      </div>
-    );
-  }
-}
+  const showContactData = () => {
+    props.history.replace("/ship/contact");
+  };
 
-export default ShippingPage;
+  return (
+    <div className={css.ShippingPage}>
+      <p style={{ fontSize: "24px" }}>
+        <strong>Таны захиалга амттай байх болно гэж найдаж байна...</strong>
+      </p>
+      <p style={{ fontSize: "24px" }}>
+        <strong>Дүн : {props.price}</strong>
+      </p>
+      <Burger />
+      <Button
+        daragdsan={cancelOrder}
+        btnType="Danger"
+        text="ЗАХИАЛГЫГ ЦУЦЛАХ"
+      />
+      <Button
+        daragdsan={showContactData}
+        btnType="Success"
+        text="ХҮРГЭЛТИЙН МЭДЭЭЛЭЛ ОРУУЛАХ"
+      />
+      <Routes>
+        <Route path="/ship/contact" Component={"ContactData"}></Route>
+      </Routes>
+    </div>
+  );
+};
+
+const mapStateToProps = (state) => {
+  return {
+    price: state.totalPrice,
+  };
+};
+
+export default connect(mapStateToProps)(ShippingPage);

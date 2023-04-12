@@ -1,24 +1,21 @@
-import React, { Component } from "react";
-// import { useHistory } from "react-router-dom";
-import { connect } from "react-redux";
-
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Burger from "../../components/Burger";
 import BuildControls from "../../components/BuildControls";
 import Spinner from "../../components/General/Spinner";
 import Modal from "../../components/General/Modal";
 import OrderSummary from "../../components/OrderSummary";
-import * as actions from "../../redux/action/burgerActions";
+
 import axios from "../../axios-orders";
 
-// let history = useHistory();
+const BurgerPage = (props) => {
+  let navigate = useNavigate();
+  console.log("--------------");
+  const [confirmOrder, setConfirmOrder] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-class BurgerPage extends Component {
-  state = {
-    confirmOrder: false,
-  };
-
-  componentDidMount = () => {
-    this.setState({ loading: true });
+  useEffect(() => {
+    setLoading(true);
     axios
       .get("/orders.json")
       .then((response) => {
@@ -26,11 +23,11 @@ class BurgerPage extends Component {
       })
       .catch((err) => console.log(err))
       .finally(() => {
-        this.setState({ loading: false });
+        setLoading(false);
       });
-  };
+  }, []);
 
-  continueOrder = () => {
+  const continueOrder = () => {
     // const order = {
     //   orts: this.props.burgeriinOrts,
     //   dun: this.props.niitUne,
@@ -54,77 +51,37 @@ class BurgerPage extends Component {
     //     meat: 0,
     //   },
     // });
-    console.log(this.props);
 
-    const params = [];
-    for (let orts in this.props.burgeriinOrts) {
-      params.push(orts + "=" + this.props.burgeriinOrts[orts]);
-    }
-
-    const query = params.join("&");
-    console.log(query);
-    // history.push("/ship");
-
-    this.closeConfirmModal();
+    navigate("/ship");
+    console.log("props =>", props);
+    closeConfirmModal();
   };
 
-  showConfirmModal = () => {
-    this.setState({ confirmOrder: true });
+  const showConfirmModal = () => {
+    setConfirmOrder(true);
   };
 
-  closeConfirmModal = () => {
-    this.setState({ confirmOrder: false });
+  const closeConfirmModal = () => {
+    setConfirmOrder(false);
   };
 
-  render() {
-    const disabledIngredients = { ...this.props.burgeriinOrts };
-
-    for (let key in disabledIngredients) {
-      disabledIngredients[key] = disabledIngredients[key] <= 0;
-    }
-
-    return (
-      <div>
-        <Modal
-          closeConfirmModal={this.closeConfirmModal}
-          show={this.state.confirmOrder}
-        >
+  return (
+    <div>
+      <Modal closeConfirmModal={closeConfirmModal} show={confirmOrder}>
+        {loading ? (
+          <Spinner />
+        ) : (
           <OrderSummary
-            onCancel={this.closeConfirmModal}
-            onContinue={this.continueOrder}
-            price={this.props.niitUne}
-            ingredientsNames={this.props.ingredientsNames}
-            ingredients={this.props.burgeriinOrts}
+            onCancel={closeConfirmModal}
+            onContinue={continueOrder}
           />
-        </Modal>
-        <Burger orts={this.props.burgeriinOrts} />
-        <BuildControls
-          showConfirmModal={this.showConfirmModal}
-          ingredientsNames={this.props.ingredientsNames}
-          disabled={!this.props.purchasing}
-          price={this.props.niitUne}
-          disabledIngredients={disabledIngredients}
-          ortsHasah={this.props.burgereesOrtsHas}
-          ortsNemeh={this.props.burgertOrtsNem}
-        />
-      </div>
-    );
-  }
-}
+        )}
+      </Modal>
 
-const mapStateToProps = (state) => {
-  return {
-    burgeriinOrts: state.ingredients,
-    niitUne: state.totalPrice,
-    purchasing: state.purchasing,
-    ingredientsNames: state.ingredientsNames,
-  };
+      <Burger />
+      <BuildControls showConfirmModal={showConfirmModal} />
+    </div>
+  );
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    burgertOrtsNem: (ortsNer) => dispatch(actions.addIngredient(ortsNer)),
-    burgereesOrtsHas: (ortsNer) => dispatch(actions.removeIngredient(ortsNer)),
-  };
-};
-export default connect(mapStateToProps, mapDispatchToProps)(BurgerPage);
+export default BurgerPage;

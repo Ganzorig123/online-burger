@@ -1,21 +1,21 @@
 import React from "react";
-
+import { connect } from "react-redux";
+import * as actions from "../../redux/action/burgerActions";
 import BuildControl from "../BuildControl";
 import css from "./style.module.css";
 
-const BuildControls = props => {
+const BuildControls = (props) => {
   return (
     <div className={css.BuildControls}>
       <p>
         Бургерийн үнэ : <strong>{props.price}</strong>
       </p>
 
-      {Object.keys(props.ingredientsNames).map(el => (
+      {Object.keys(props.ingredientsNames).map((el) => (
         <BuildControl
           key={el}
           ortsHasah={props.ortsHasah}
           ortsNemeh={props.ortsNemeh}
-          disabled={props.disabledIngredients}
           type={el}
           orts={props.ingredientsNames[el]}
         />
@@ -23,7 +23,7 @@ const BuildControls = props => {
 
       <button
         onClick={props.showConfirmModal}
-        disabled={props.disabled}
+        disabled={!props.purchasing}
         className={css.OrderButton}
       >
         ЗАХИАЛАХ
@@ -32,4 +32,18 @@ const BuildControls = props => {
   );
 };
 
-export default BuildControls;
+const mapStateToProps = (state) => {
+  return {
+    price: state.totalPrice,
+    ingredientsNames: state.ingredientsNames,
+    purchasing: state.purchasing,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    ortsNemeh: (ortsNer) => dispatch(actions.addIngredient(ortsNer)),
+    ortsHasah: (ortsNer) => dispatch(actions.removeIngredient(ortsNer)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(BuildControls);

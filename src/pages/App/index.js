@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import css from "./style.module.css";
 
@@ -8,35 +8,26 @@ import OrderPage from "../OrderPage";
 import SideBar from "../../components/SideBar";
 import ShippingPage from "../ShippingPage";
 
-class App extends Component {
-  state = {
-    showSidebar: false,
+const App = (props) => {
+  const [showSidebar, setShowSidebar] = useState(false);
+
+  const toggleSideBar = () => {
+    setShowSidebar((prevState) => !prevState.showSidebar);
   };
 
-  toggleSideBar = () => {
-    this.setState((prevState) => {
-      return { showSidebar: !prevState.showSidebar };
-    });
-  };
-
-  render() {
-    return (
-      <div>
-        <Toolbar toggleSideBar={this.toggleSideBar} />
-        <SideBar
-          showSidebar={this.state.showSidebar}
-          toggleSideBar={this.toggleSideBar}
-        />
-        <main className={css.Content}>
-          <Routes>
-            <Route path="/orders" Component={OrderPage} />
-            <Route path="/ship" Component={ShippingPage} />
-            <Route path="/" Component={BurgerPage} />
-          </Routes>
-        </main>
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      <Toolbar toggleSideBar={toggleSideBar} />
+      <SideBar showSidebar={showSidebar} toggleSideBar={toggleSideBar} />
+      <main className={css.Content}>
+        <Routes>
+          <Route path="/orders" Component={OrderPage} />
+          <Route path="/ship" Component={ShippingPage} />
+          <Route path="/" Component={BurgerPage} />
+        </Routes>
+      </main>
+    </div>
+  );
+};
 
 export default App;

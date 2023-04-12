@@ -1,10 +1,12 @@
 import React from "react";
 import BurgerIngredient from "../BurgerIngredient";
+import { connect } from "react-redux";
 import css from "./style.module.css";
+// import { useRouter } from "react-router-dom";
 
 const Burger = (props) => {
   //{bacon: 2, cheese: 2, meat: 1, salad: 1}
-  const items = Object.entries(props.orts);
+  const items = Object.entries(props.ingredients);
 
   let content = [];
   items.map((el) => {
@@ -25,4 +27,10 @@ const Burger = (props) => {
   );
 };
 
-export default Burger;
+const mapStateToProps = (state) => {
+  return {
+    ingredients: state.ingredients,
+  };
+};
+
+export default connect(mapStateToProps)(Burger);

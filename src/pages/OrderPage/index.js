@@ -1,43 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "../../axios-orders";
 import Spinner from "../../components/General/Spinner";
 import Order from "../../components/Order";
 import css from "./style.module.css";
 
-class OrderPage extends React.Component {
-  state = {
-    orders: [],
-    loading: false,
-  };
+const OrderPage = (props) => {
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  componentDidMount = () => {
-    this.setState({ loading: true });
+  useEffect(() => {
+    setLoading(true);
     axios
       .get("/orders.json")
       .then((response) => {
         const arr = Object.entries(response.data).reverse();
-
-        this.setState({
-          orders: arr,
-        });
+        setOrders(arr);
       })
       .catch((err) => console.log(err))
       .finally(() => {
-        this.setState({ loading: false });
+        setLoading(false);
       });
-  };
+  }, []);
 
-  render() {
-    return (
-      <div>
-        {this.state.loading ? (
-          <Spinner />
-        ) : (
-          this.state.orders.map((el) => <Order key={el[0]} order={el[1]} />)
-        )}
-      </div>
-    );
-  }
-}
+  return (
+    <div>
+      {loading ? (
+        <Spinner />
+      ) : (
+        orders.map((el) => <Order key={el[0]} order={el[1]} />)
+      )}
+    </div>
+  );
+};
 
 export default OrderPage;
