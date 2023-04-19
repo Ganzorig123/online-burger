@@ -2,7 +2,6 @@ import React from "react";
 import BurgerIngredient from "../BurgerIngredient";
 import { connect } from "react-redux";
 import css from "./style.module.css";
-// import { useRouter } from "react-router-dom";
 
 const Burger = (props) => {
   //{bacon: 2, cheese: 2, meat: 1, salad: 1}

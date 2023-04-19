@@ -10,7 +10,6 @@ import axios from "../../axios-orders";
 
 const BurgerPage = (props) => {
   let navigate = useNavigate();
-  console.log("--------------");
   const [confirmOrder, setConfirmOrder] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -28,30 +27,6 @@ const BurgerPage = (props) => {
   }, []);
 
   const continueOrder = () => {
-    // const order = {
-    //   orts: this.props.burgeriinOrts,
-    //   dun: this.props.niitUne,
-    //   hayag: {
-    //     name: "Энхтөр",
-    //     city: "UB",
-    //     street: "10-r horoolol 23-12",
-    //   },
-    // };
-
-    // axios
-    //   .post("orders.json", order)
-    //   .then((response) => {})
-    //   .finally(() => {});
-
-    // this.setState({
-    //   ingredients: {
-    //     salad: 0,
-    //     bacon: 0,
-    //     cheese: 0,
-    //     meat: 0,
-    //   },
-    // });
-
     navigate("/ship");
     console.log("props =>", props);
     closeConfirmModal();

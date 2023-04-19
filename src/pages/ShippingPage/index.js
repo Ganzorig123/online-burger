@@ -2,18 +2,18 @@ import React from "react";
 import { connect } from "react-redux";
 import Burger from "../../components/Burger";
 import Button from "../../components/General/Button";
-import ContactData from "../../components/ContactData";
 import css from "./style.module.css";
-import { Route, Routes } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const ShippingPage = (props) => {
+  let navigate = useNavigate();
   const cancelOrder = () => {
-    console.log("GoBack");
-    // props.history.goBack();
+    // console.log("GoBack");
+    navigate(-1);
   };
 
   const showContactData = () => {
-    props.history.replace("/ship/contact");
+    navigate("/ship/contact", { replace: true });
   };
 
   return (
@@ -35,9 +35,7 @@ const ShippingPage = (props) => {
         btnType="Success"
         text="ХҮРГЭЛТИЙН МЭДЭЭЛЭЛ ОРУУЛАХ"
       />
-      <Routes>
-        <Route path="/ship/contact" Component={"ContactData"}></Route>
-      </Routes>
+      <Outlet />
     </div>
   );
 };

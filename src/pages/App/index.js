@@ -7,6 +7,7 @@ import BurgerPage from "../BurgerPage";
 import OrderPage from "../OrderPage";
 import SideBar from "../../components/SideBar";
 import ShippingPage from "../ShippingPage";
+import ContactData from "../../components/ContactData";
 
 const App = (props) => {
   const [showSidebar, setShowSidebar] = useState(false);
@@ -21,9 +22,11 @@ const App = (props) => {
       <SideBar showSidebar={showSidebar} toggleSideBar={toggleSideBar} />
       <main className={css.Content}>
         <Routes>
-          <Route path="/orders" Component={OrderPage} />
-          <Route path="/ship" Component={ShippingPage} />
-          <Route path="/" Component={BurgerPage} />
+          <Route path="/" element={<BurgerPage />} />
+          <Route path="orders" element={<OrderPage />} />
+          <Route path="ship" element={<ShippingPage />}>
+            <Route path="contact" element={<ContactData />} />
+          </Route>
         </Routes>
       </main>
     </div>
