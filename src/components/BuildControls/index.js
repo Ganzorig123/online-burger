@@ -34,9 +34,9 @@ const BuildControls = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    price: state.totalPrice,
-    ingredientsNames: state.ingredientsNames,
-    purchasing: state.purchasing,
+    price: state.burgerReducer.totalPrice,
+    ingredientsNames: state.burgerReducer.ingredientsNames,
+    purchasing: state.burgerReducer.purchasing,
   };
 };
 

@@ -1,36 +1,51 @@
 import React, { useState, useEffect } from "react";
-import axios from "../../axios-orders";
+import { connect } from "react-redux";
+import * as actions from "../../redux/action/orderActions";
 import Spinner from "../../components/General/Spinner";
 import Order from "../../components/Order";
 import css from "./style.module.css";
 
 const OrderPage = (props) => {
-  const [orders, setOrders] = useState([]);
-  const [loading, setLoading] = useState(false);
+  // const [orders, setOrders] = useState([]);
+  // const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    setLoading(true);
-    axios
-      .get("/orders.json")
-      .then((response) => {
-        const arr = Object.entries(response.data).reverse();
-        setOrders(arr);
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setLoading(false);
-      });
+    props.loadOrders();
+    // setLoading(true);
+    // axios
+    //   .get("/orders.json")
+    //   .then((response) => {
+    //     const arr = Object.entries(response.data).reverse();
+    //     setOrders(arr);
+    //   })
+    //   .catch((err) => console.log(err))
+    //   .finally(() => {
+    //     setLoading(false);
+    //   });
   }, []);
-
+  // console.log(JSON.stringify(orders));
   return (
     <div>
-      {loading ? (
+      {props.loading ? (
         <Spinner />
       ) : (
-        orders.map((el) => <Order key={el[0]} order={el[1]} />)
+        props.orders.map((el) => <Order key={el[0]} order={el[1]} />)
       )}
     </div>
   );
 };
 
-export default OrderPage;
+const mapStateToProps = (state) => {
+  return {
+    orders: state.orderReducer.orders,
+    loading: state.orderReducer.loading,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadOrders: () => dispatch(actions.loadOrders()),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(OrderPage);

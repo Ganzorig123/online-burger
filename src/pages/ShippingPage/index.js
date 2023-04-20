@@ -42,7 +42,7 @@ const ShippingPage = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    price: state.totalPrice,
+    price: state.burgerReducer.totalPrice,
   };
 };
 

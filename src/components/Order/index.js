@@ -10,7 +10,8 @@ const Order = (props) => {
         {props.order.orts.cheese}
       </p>
       <p>
-        Хаяг : {props.order.hayag.name} | ${props.order.hayag.street}
+        Хаяг : {props.order.hayag.name} | {props.order.hayag.street} |{" "}
+        {props.order.hayag.city}
       </p>
       <p>Үнийн дүн : {props.order.dun}₮</p>
     </div>
