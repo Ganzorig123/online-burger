@@ -1,17 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import css from "./style.module.css";
 import Button from "../General/Button";
-
-import axios from "../../axios-orders";
+import * as orderActions from "../../redux/action/orderActions";
 import Spinner from "../General/Spinner";
 
 const ContactData = (props) => {
   const [name, setName] = useState(null);
   const [street, setStreet] = useState(null);
   const [city, setCity] = useState(null);
-  const [loading, setLoading] = useState(null);
 
   let navigate = useNavigate();
 
@@ -28,7 +26,7 @@ const ContactData = (props) => {
   };
 
   const saveOrder = () => {
-    const order = {
+    const newOrder = {
       orts: props.ingredients,
       dun: props.price,
       hayag: {
@@ -38,22 +36,24 @@ const ContactData = (props) => {
       },
     };
 
-    setLoading(true);
-
-    axios
-      .post("orders.json", order)
-      .then((response) => {
-        console.log("Order amjilttai");
-      })
-      .finally(() => {
-        setLoading(false);
-        navigate("/orders");
-      });
+    props.saveOrderAction(newOrder);
   };
+
+  useEffect(() => {
+    // alert("Update");
+    if (!props.newOrderStatus.saving && !props.newOrderStatus.error) {
+      navigate("/orders");
+    }
+  });
 
   return (
     <div className={css.ContactData}>
-      {loading ? (
+      Дүн : {props.price}₮
+      <div>
+        {props.newOrderStatus.error &&
+          `Захиалгыг хадгалах явцад алдаа гарлаа : ${props.newOrderStatus.error}`}
+      </div>
+      {props.newOrderStatus.saving ? (
         <Spinner />
       ) : (
         <div>
@@ -86,7 +86,13 @@ const mapStateToProps = (state) => {
   return {
     price: state.burgerReducer.totalPrice,
     ingredients: state.burgerReducer.ingredients,
+    newOrderStatus: state.orderReducer.newOrder,
   };
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    saveOrderAction: (newOrder) => dispatch(orderActions.saveOrder(newOrder)),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);

@@ -6,24 +6,10 @@ import Order from "../../components/Order";
 import css from "./style.module.css";
 
 const OrderPage = (props) => {
-  // const [orders, setOrders] = useState([]);
-  // const [loading, setLoading] = useState(false);
-
   useEffect(() => {
     props.loadOrders();
-    // setLoading(true);
-    // axios
-    //   .get("/orders.json")
-    //   .then((response) => {
-    //     const arr = Object.entries(response.data).reverse();
-    //     setOrders(arr);
-    //   })
-    //   .catch((err) => console.log(err))
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   }, []);
-  // console.log(JSON.stringify(orders));
+
   return (
     <div>
       {props.loading ? (

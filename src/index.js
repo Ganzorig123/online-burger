@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 import { Provider } from "react-redux";
+import thunk from "redux-thunk";
 import burgerReducer from "./redux/reducer/burgerReducer";
 import orderReducer from "./redux/reducer/orderReducer";
 
@@ -23,10 +24,11 @@ const LoggerMiddleware = (store) => {
 };
 
 const reducers = combineReducers({ burgerReducer, orderReducer });
+const middlewares = [LoggerMiddleware, thunk];
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducers,
-  composeEnhancers(applyMiddleware(LoggerMiddleware))
+  composeEnhancers(applyMiddleware(...middlewares))
 );
 
 ReactDOM.render(

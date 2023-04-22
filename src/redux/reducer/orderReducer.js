@@ -1,29 +1,58 @@
 const initialState = {
-  orders: [
-    [
-      "-NTPOMZQ8TqKIMZufRYe",
-      {
-        dun: 4400,
-        hayag: {
-          city: "Улаанбаатар хот",
-          name: "Зоригтбаяр",
-          street: "УБ ХУД 20-р хороо",
-        },
-        orts: { bacon: 0, cheese: 1, meat: 2, salad: 1 },
-      },
-    ],
-  ],
+  //Load order
+  orders: [],
   loading: false,
+  firebaseError: null,
+
+  //Save order
+  newOrder: {
+    saving: false,
+    finished: false,
+    error: null,
+  },
 };
 
-// const [orders, setOrders] = useState([]);
-// const [loading, setLoading] = useState(false);
-
 const reducer = (state = initialState, action) => {
-  if (action.type === "LOAD_ORDERS") {
-    return { ...state, loading: true };
+  switch (action.type) {
+    case "LOAD_ORDERS_START":
+      return { ...state, loading: true };
+      break;
+
+    case "LOAD_ORDERS_SUCCESS":
+      return {
+        ...state,
+        loading: false,
+        orders: action.orders,
+        firebaseError: null,
+      };
+      break;
+
+    case "LOAD_ORDERS_ERROR":
+      return { ...state, loading: false, firebaseError: action.error };
+      break;
+
+    case "SAVE_ORDER_START":
+      return { ...state, newOrder: { ...state.newOrder, saving: true } };
+      break;
+
+    case "SAVE_ORDER_SUCCESS":
+      return {
+        ...state,
+        newOrder: { ...state.newOrder, saving: false, error: null },
+      };
+      break;
+
+    case "SAVE_ORDER_ERROR":
+      return {
+        ...state,
+        newOrder: { ...state.newOrder, saving: false, error: action.error },
+      };
+      break;
+
+    default:
+      return state;
+      break;
   }
-  return state;
 };
 
 export default reducer;
