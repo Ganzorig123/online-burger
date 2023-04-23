@@ -11,7 +11,7 @@ const ContactData = (props) => {
   const [street, setStreet] = useState(null);
   const [city, setCity] = useState(null);
 
-  let navigate = useNavigate();
+  const navigate = useNavigate();
 
   const changeName = (e) => {
     setName(e.target.value);

@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Route, Routes } from "react-router-dom";
+import { connect } from "react-redux";
 import css from "./style.module.css";
 
 import Toolbar from "../../components/Toolbar";
 import BurgerPage from "../BurgerPage";
+import LoginPage from "../LoginPage";
+import SignupPage from "../SignupPage";
 import OrderPage from "../OrderPage";
 import SideBar from "../../components/SideBar";
 import ShippingPage from "../ShippingPage";
@@ -21,8 +24,12 @@ const App = (props) => {
       <Toolbar toggleSideBar={toggleSideBar} />
       <SideBar showSidebar={showSidebar} toggleSideBar={toggleSideBar} />
       <main className={css.Content}>
+        UserID : {props.userId}
         <Routes>
           <Route path="/" element={<BurgerPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="logout" element={<LoginPage />} />
+          <Route path="signup" element={<SignupPage />} />
           <Route path="orders" element={<OrderPage />} />
           <Route path="ship" element={<ShippingPage />}>
             <Route path="contact" element={<ContactData />} />
@@ -33,4 +40,10 @@ const App = (props) => {
   );
 };
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    userId: state.signupLoginReducer.userId,
+  };
+};
+
+export default connect(mapStateToProps)(App);

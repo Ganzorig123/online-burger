@@ -1,14 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
+import * as actions from "../../redux/action/signupActions";
 import css from "./style.module.css";
 import Spinner from "../../components/General/Spinner";
 import Button from "../../components/General/Button";
 
-const SignupPage = () => {
-  const [email, setEmail] = useState[""];
-  const [password1, setPassword1] = useState[""];
-  const [password2, setPassword2] = useState[""];
-  const [error, setError] = useState[""];
+const SignupPage = (props) => {
+  const [email, setEmail] = useState("");
+  const [password1, setPassword1] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [error, setError] = useState("");
+
+  const navigate = useNavigate();
 
   const changeEmail = (e) => {
     setEmail(e.target.value);
@@ -24,7 +28,7 @@ const SignupPage = () => {
 
   const signup = () => {
     if (password1 === password2) {
-      signupUser(email, password1);
+      props.signupUser(email, password1);
     } else {
       setError("Нууц үгнүүд хоорондоо таарахгүй байна!");
     }
@@ -32,7 +36,7 @@ const SignupPage = () => {
 
   return (
     <div className={css.SignupPage}>
-      {props.userId && <Redirect to="/" />}
+      {props.userId && navigate("/")}
       <h1>Бүртгэлийн форм</h1>
       <div>Та өөрийн мэдээлэлээ оруулна уу!</div>
       <input onChange={changeEmail} type="text" placeholder="Имэйл хаяг" />
@@ -59,13 +63,13 @@ const SignupPage = () => {
 
 const mapStateToProps = (state) => {
   return {
-    saving: state.signupReducer.saving,
-    firebaseError: state.signupReducer.firebaseError,
-    userId: state.signupReducer.userId,
+    saving: state.signupLoginReducer.saving,
+    firebaseError: state.signupLoginReducer.firebaseError,
+    userId: state.signupLoginReducer.userId,
   };
 };
 
-const mapDispatchToProps = (state) => {
+const mapDispatchToProps = (dispatch) => {
   return {
     signupUser: (email, password) =>
       dispatch(actions.signupUser(email, password)),
