@@ -1,12 +1,12 @@
 import axios from "../../axios-orders";
 
-export const loadOrders = () => {
+export const loadOrders = (userId) => {
   return function (dispatch) {
     //Захиалгыг татаж эхэлллээ. Үүнийг сонсоод Spinner ажиллаж эхлэнэ.
     dispatch(loadOrdersStart());
 
     axios
-      .get("/orders.json")
+      .get(`orders.json?orderBy="userId"&equalTo="${userId}"`)
       .then((response) => {
         const loadedOrders = Object.entries(response.data).reverse();
         dispatch(loadOrdersSuccess(loadedOrders));

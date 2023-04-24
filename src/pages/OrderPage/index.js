@@ -7,7 +7,7 @@ import css from "./style.module.css";
 
 const OrderPage = (props) => {
   useEffect(() => {
-    props.loadOrders();
+    props.loadOrders(props.userId);
   }, []);
 
   return (
@@ -25,12 +25,13 @@ const mapStateToProps = (state) => {
   return {
     orders: state.orderReducer.orders,
     loading: state.orderReducer.loading,
+    userId: state.signupLoginReducer.userId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadOrders: () => dispatch(actions.loadOrders()),
+    loadOrders: (userId) => dispatch(actions.loadOrders(userId)),
   };
 };
 

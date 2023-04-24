@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 import css from "./style.module.css";
@@ -27,6 +27,7 @@ const ContactData = (props) => {
 
   const saveOrder = () => {
     const newOrder = {
+      userId: props.userId,
       orts: props.ingredients,
       dun: props.price,
       hayag: {
@@ -37,14 +38,14 @@ const ContactData = (props) => {
     };
 
     props.saveOrderAction(newOrder);
-  };
 
-  useEffect(() => {
-    // alert("Update");
-    if (!props.newOrderStatus.saving && !props.newOrderStatus.error) {
+    if (
+      props.newOrderStatus.saving === false &&
+      props.newOrderStatus.error === null
+    ) {
       navigate("/orders");
     }
-  });
+  };
 
   return (
     <div className={css.ContactData}>
@@ -87,6 +88,7 @@ const mapStateToProps = (state) => {
     price: state.burgerReducer.totalPrice,
     ingredients: state.burgerReducer.ingredients,
     newOrderStatus: state.orderReducer.newOrder,
+    userId: state.signupLoginReducer.userId,
   };
 };
 

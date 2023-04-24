@@ -44,3 +44,10 @@ export const loginUserError = (error) => {
     error,
   };
 };
+
+// Login
+export const logout = () => {
+  return {
+    type: "LOGOUT",
+  };
+};
