@@ -12,3 +12,9 @@
   background-color: white;
   height: 3px;
 }
+
+@media (min-width: 500px) {
+  .HamburgerMenu {
+    display: none;
+  }
+}

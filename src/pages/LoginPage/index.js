@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Navigate } from "react-router-dom";
 import * as loginActions from "../../redux/action/loginActions";
 import Button from "../../components/General/Button";
 import css from "./style.module.css";
@@ -25,7 +25,9 @@ const Login = (props) => {
 
   return (
     <div className={css.Login}>
-      {props.userId && navigate("/orders")}
+      {/* {props.userId && navigate("/orders") } */}
+      {props.userId && <Navigate to="/orders" />}
+
       <input onChange={changeEmail} type="text" placeholder="И-мэйл хаяг" />
       <input onChange={changePassword} type="password" placeholder="Нууц үг" />
       {props.firebaseError && (

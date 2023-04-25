@@ -3,9 +3,8 @@ const initialState = {
   password: "",
   saving: false,
   loginin: false,
-  userId: null,
   token: null,
-  firebaseResultData: null,
+  userId: null,
   firebaseError: null,
   firebaseErrorCode: null,
 };
@@ -21,9 +20,8 @@ const reducer = (state = initialState, action) => {
         ...state,
         saving: false,
         firebaseError: null,
-        userId: action.firebaseResultData.localId,
-        token: action.firebaseResultData.idToken,
-        firebaseResultData: action.firebaseResultData,
+        token: action.token,
+        userId: action.userId,
       };
       break;
 
@@ -44,9 +42,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loginin: false,
-        userId: action.firebaseResultData.localId,
-        token: action.firebaseResultData.idToken,
-        firebaseResultData: action.firebaseResultData,
+        token: action.token,
+        userId: action.userId,
         firebaseError: null,
         firebaseErrorCode: null,
       };

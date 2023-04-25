@@ -13,19 +13,6 @@ const BurgerPage = (props) => {
   const [confirmOrder, setConfirmOrder] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get("/orders.json")
-      .then((response) => {
-        const arr = Object.entries(response.data).reverse();
-      })
-      .catch((err) => console.log(err))
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
-
   const continueOrder = () => {
     navigate("/ship");
     console.log("props =>", props);

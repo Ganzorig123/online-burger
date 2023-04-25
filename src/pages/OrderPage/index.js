@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../redux/action/orderActions";
 import Spinner from "../../components/General/Spinner";
 import Order from "../../components/Order";
-import css from "./style.module.css";
+// import css from "./style.module.css";
 
 const OrderPage = (props) => {
   useEffect(() => {
-    props.loadOrders(props.userId);
+    props.loadOrders();
   }, []);
 
   return (
@@ -25,13 +25,12 @@ const mapStateToProps = (state) => {
   return {
     orders: state.orderReducer.orders,
     loading: state.orderReducer.loading,
-    userId: state.signupLoginReducer.userId,
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    loadOrders: (userId) => dispatch(actions.loadOrders(userId)),
+    loadOrders: () => dispatch(actions.loadOrders()),
   };
 };
 
